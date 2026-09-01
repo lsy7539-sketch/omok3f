@@ -13,6 +13,9 @@ export async function createPlayer(ownerId: string, name: string): Promise<Playe
     .insert({ owner_id: ownerId, name: name.trim() })
     .select()
     .single();
-  if (error) throw error;
+  if (error) {
+    if (error.code === "23505") throw new Error(`"${name.trim()}"은(는) 이미 있는 이름이에요.`);
+    throw error;
+  }
   return data;
 }

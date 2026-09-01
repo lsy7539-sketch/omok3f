@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useState } from "react";
 import { createPlayer, listPlayers } from "../db/players";
 import type { Player } from "../db/types";
+import { errorMessage } from "../lib/errorMessage";
 
 export function usePlayers(ownerId: string | null) {
   const [players, setPlayers] = useState<Player[]>([]);
@@ -14,7 +15,7 @@ export function usePlayers(ownerId: string | null) {
       setPlayers(await listPlayers());
       setError(null);
     } catch (err) {
-      setError(err instanceof Error ? err.message : String(err));
+      setError(errorMessage(err));
     } finally {
       setLoading(false);
     }
@@ -33,7 +34,7 @@ export function usePlayers(ownerId: string | null) {
       setPlayers((prev) => [...prev, player].sort((a, b) => a.name.localeCompare(b.name)));
       setError(null);
     } catch (err) {
-      setError(err instanceof Error ? err.message : String(err));
+      setError(errorMessage(err));
     }
   };
 

@@ -2,6 +2,7 @@ import { useCallback, useEffect, useState } from "react";
 import { listMatches, recordMatch } from "../db/matches";
 import type { MatchRecord } from "../db/types";
 import type { WinReason } from "../game/types";
+import { errorMessage } from "../lib/errorMessage";
 
 export function useMatches(ownerId: string | null) {
   const [matches, setMatches] = useState<MatchRecord[]>([]);
@@ -13,7 +14,7 @@ export function useMatches(ownerId: string | null) {
       setMatches(await listMatches());
       setError(null);
     } catch (err) {
-      setError(err instanceof Error ? err.message : String(err));
+      setError(errorMessage(err));
     }
   }, [ownerId]);
 
@@ -28,7 +29,8 @@ export function useMatches(ownerId: string | null) {
       setMatches((prev) => [saved, ...prev]);
       setError(null);
     } catch (err) {
-      setError(err instanceof Error ? err.message : String(err));
+      setError(errorMessage(err));
+      throw err; // let the caller (GameScreen) know the save actually failed
     }
   };
 
