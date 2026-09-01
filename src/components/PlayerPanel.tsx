@@ -4,9 +4,10 @@ import { PLAYER_LABELS, STARTING_STONES_LABEL } from "../uiLabels";
 interface PlayerPanelProps {
   playerId: PlayerId;
   state: GameState;
+  displayName?: string;
 }
 
-export default function PlayerPanel({ playerId, state }: PlayerPanelProps) {
+export default function PlayerPanel({ playerId, state, displayName }: PlayerPanelProps) {
   const isCurrent = state.currentPlayer === playerId;
   const isActive = isCurrent && state.phase !== "GAME_OVER";
   const isWinner = state.winner === playerId;
@@ -31,6 +32,7 @@ export default function PlayerPanel({ playerId, state }: PlayerPanelProps) {
         <span className={`stone-swatch stone-${playerId.toLowerCase()}`} aria-hidden="true" />
         <span className="player-label">{PLAYER_LABELS[playerId]}</span>
       </div>
+      {displayName && <div className="player-name">{displayName}</div>}
       <div className="player-stones">
         남은 돌 <span className="stones-count">{stonesRemaining}</span>
         <span className="stones-total">{STARTING_STONES_LABEL}</span>

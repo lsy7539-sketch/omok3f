@@ -531,8 +531,302 @@ button:focus-visible {
   font-size: 1rem;
 }
 
-.victory-modal .btn-primary {
+.victory-role {
+  margin: -4px 0 0;
+  font-size: 0.72rem;
+  letter-spacing: 0.12em;
+  color: var(--ink-faint);
+  font-weight: 700;
+}
+
+.record-status {
+  margin: -6px 0 0;
+  font-size: 0.8rem;
+  color: var(--ink-soft);
+  min-height: 1.2em;
+}
+
+.victory-actions {
+  display: flex;
+  gap: 10px;
   margin-top: 4px;
+}
+
+/* ---------- Player name (roster label under PLAYER 1/2) ---------- */
+
+.player-name {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--ink);
+}
+
+/* ---------- Auth screen ---------- */
+
+.app-loading {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--ink-soft);
+  font-size: 0.9rem;
+}
+
+.auth-screen {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+
+.auth-card {
+  width: 100%;
+  max-width: 380px;
+  background: var(--panel);
+  border: 1px solid var(--panel-border);
+  border-radius: 18px;
+  padding: 32px 28px;
+  box-shadow: 0 32px 64px -24px var(--shadow-deep);
+  text-align: center;
+}
+
+.auth-title {
+  font-family: "Gowun Batang", serif;
+  font-size: 1.9rem;
+  margin: 0 0 6px;
+  letter-spacing: 0.06em;
+}
+
+.auth-tagline {
+  margin: 0 0 22px;
+  color: var(--ink-soft);
+  font-size: 0.85rem;
+}
+
+.auth-tabs {
+  display: flex;
+  border: 1px solid var(--panel-border);
+  border-radius: 999px;
+  padding: 3px;
+  margin-bottom: 20px;
+}
+
+.auth-tabs button {
+  flex: 1;
+  background: transparent;
+  border: none;
+  color: var(--ink-soft);
+  font-weight: 600;
+  font-size: 0.85rem;
+  padding: 8px 0;
+  border-radius: 999px;
+  cursor: pointer;
+}
+
+.auth-tabs button.is-active {
+  background: var(--accent);
+  color: var(--accent-ink);
+}
+
+.auth-form {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  text-align: left;
+}
+
+.auth-form label {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-size: 0.78rem;
+  color: var(--ink-soft);
+  letter-spacing: 0.02em;
+}
+
+.auth-form input {
+  font-family: inherit;
+  font-size: 0.92rem;
+  color: var(--ink);
+  background: var(--bg);
+  border: 1px solid var(--panel-border);
+  border-radius: 10px;
+  padding: 10px 12px;
+}
+
+.auth-form input:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 1px;
+}
+
+.auth-form .btn-primary {
+  margin-top: 4px;
+  width: 100%;
+}
+
+.auth-error {
+  margin: 0;
+  color: #e08585;
+  font-size: 0.8rem;
+}
+
+.auth-notice {
+  margin: 0;
+  color: var(--win-glow);
+  font-size: 0.8rem;
+}
+
+/* ---------- Match setup / roster ---------- */
+
+.setup-screen {
+  max-width: 560px;
+  margin: 0 auto;
+  padding: 40px 20px 64px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.setup-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.setup-title {
+  font-family: "Gowun Batang", serif;
+  font-size: 1.7rem;
+  margin: 0;
+  letter-spacing: 0.06em;
+}
+
+.setup-user {
+  margin: 2px 0 0;
+  font-size: 0.78rem;
+  color: var(--ink-faint);
+}
+
+.setup-section {
+  background: var(--panel);
+  border: 1px solid var(--panel-border);
+  border-radius: 16px;
+  padding: 22px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.setup-section h2 {
+  margin: 0;
+  font-size: 1.05rem;
+}
+
+.setup-hint {
+  margin: -8px 0 0;
+  color: var(--accent);
+  font-size: 0.82rem;
+  font-weight: 600;
+}
+
+.player-roster {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  max-height: 40vh;
+  overflow-y: auto;
+}
+
+.roster-empty {
+  color: var(--ink-faint);
+  font-size: 0.85rem;
+  padding: 8px 0;
+}
+
+.roster-item {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: var(--bg);
+  border: 1px solid var(--panel-border);
+  border-radius: 10px;
+  padding: 10px 14px;
+  cursor: pointer;
+  font-family: inherit;
+  color: var(--ink);
+  text-align: left;
+}
+
+.roster-item:hover {
+  border-color: var(--accent-soft);
+}
+
+.roster-item.is-picked-p1 {
+  border-color: var(--p1);
+  background: color-mix(in srgb, var(--p1) 10%, var(--bg));
+}
+
+.roster-item.is-picked-p2 {
+  border-color: var(--p2);
+  background: color-mix(in srgb, var(--p2) 10%, var(--bg));
+}
+
+.roster-role {
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  color: var(--accent-ink);
+  background: var(--accent);
+  padding: 2px 6px;
+  border-radius: 999px;
+}
+
+.roster-name {
+  flex: 1;
+  font-weight: 600;
+  font-size: 0.9rem;
+}
+
+.roster-record {
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 0.75rem;
+  color: var(--ink-soft);
+  font-variant-numeric: tabular-nums;
+}
+
+.add-player-form {
+  display: flex;
+  gap: 8px;
+}
+
+.add-player-form input {
+  flex: 1;
+  font-family: inherit;
+  font-size: 0.88rem;
+  color: var(--ink);
+  background: var(--bg);
+  border: 1px solid var(--panel-border);
+  border-radius: 10px;
+  padding: 9px 12px;
+}
+
+.add-player-form input:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 1px;
+}
+
+.start-match {
+  width: 100%;
+  margin-top: 4px;
+}
+
+.start-match:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
 }
 
 /* ---------- Responsive ---------- */

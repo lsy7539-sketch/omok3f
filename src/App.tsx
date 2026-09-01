@@ -1,41 +1,48 @@
 import { useState } from "react";
-import { useGame } from "./hooks/useGame";
-import Board from "./components/Board";
-import PlayerPanel from "./components/PlayerPanel";
-import GameStatus from "./components/GameStatus";
-import RulesModal from "./components/RulesModal";
-import VictoryModal from "./components/VictoryModal";
+import { useAuth } from "./hooks/useAuth";
+import { usePlayers } from "./hooks/usePlayers";
+import { useMatches } from "./hooks/useMatches";
+import { statsByPlayer } from "./db/stats";
+import AuthScreen from "./components/AuthScreen";
+import MatchSetup from "./components/MatchSetup";
+import GameScreen from "./components/GameScreen";
+import type { Player } from "./db/types";
 
 export default function App() {
-  const { state, handleCellClick, reset, validMoveTargets } = useGame();
-  const [rulesOpen, setRulesOpen] = useState(false);
+  const { user, loading, signIn, signUp, signOut } = useAuth();
+  const { players, loading: playersLoading, error: playersError, addPlayer } = usePlayers(user?.id ?? null);
+  const { matches, submitResult } = useMatches(user?.id ?? null);
+  const [match, setMatch] = useState<{ p1: Player; p2: Player } | null>(null);
+
+  if (loading) {
+    return <div className="app-loading">불러오는 중...</div>;
+  }
+
+  if (!user) {
+    return <AuthScreen onSignIn={signIn} onSignUp={signUp} />;
+  }
+
+  if (!match) {
+    return (
+      <MatchSetup
+        userEmail={user.email ?? ""}
+        players={players}
+        stats={statsByPlayer(matches, players)}
+        loading={playersLoading}
+        error={playersError}
+        onAddPlayer={addPlayer}
+        onStart={(p1, p2) => setMatch({ p1, p2 })}
+        onSignOut={signOut}
+      />
+    );
+  }
 
   return (
-    <div className="app">
-      <header className="app-header">
-        <h1>3층오목</h1>
-        <p className="app-tagline">삼각 격자 위에 돌을 쌓아 세 가지 방법 중 하나로 승리하는 전략 게임</p>
-      </header>
-
-      <div className="player-row">
-        <PlayerPanel playerId="P1" state={state} />
-        <GameStatus state={state} />
-        <PlayerPanel playerId="P2" state={state} />
-      </div>
-
-      <Board state={state} validMoveTargets={validMoveTargets} onCellClick={handleCellClick} />
-
-      <div className="controls-row">
-        <button className="btn-secondary" onClick={() => setRulesOpen(true)}>
-          게임 규칙
-        </button>
-        <button className="btn-primary" onClick={reset}>
-          다시하기
-        </button>
-      </div>
-
-      {rulesOpen && <RulesModal onClose={() => setRulesOpen(false)} />}
-      <VictoryModal state={state} onRestart={reset} />
-    </div>
+    <GameScreen
+      p1={match.p1}
+      p2={match.p2}
+      onExitMatch={() => setMatch(null)}
+      onRecordWin={(p1Id, p2Id, winnerId, winReason) => submitResult(p1Id, p2Id, winnerId, winReason)}
+    />
   );
 }
